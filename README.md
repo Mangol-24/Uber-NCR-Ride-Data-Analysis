@@ -147,7 +147,10 @@ GROUP BY pickup_location, drop_location
 HAVING COUNT(booking_id) >= 10  -- Avoid low-volume routes
 ORDER BY avg_booking_value DESC, cancellation_rate_percent ASC
 LIMIT 10;
-  
+
+## DAX Measures in Power BI**
+
+
 
 
 
