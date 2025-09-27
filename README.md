@@ -53,6 +53,18 @@ This project analyzes UBER ride data for the NCR (National Capital Region) to ex
 -- **Akshardham → RK Puram** → cancellation rate 56%
 -Insight: Some long-distance routes face reliability issues 
 
+----
+
+## Dashboard Preview
+(Link Of the Dashboard PDF)
+
+-The dashboard shows:
+-- KPI: Total Bookings, Completed Rides, Avg Booking Value, Cancellation Rate, Peak Hour Rides
+-- Rides by **Day, Hour, Vehicle Type, Payment Method**
+-- **Top 10 pickup-drop pairs** with completion and cancellation rate
+--Cancellation reasons breakdown
+
+
 
 
 
