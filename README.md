@@ -116,8 +116,37 @@ WHERE Booking_Status = 'Completed'
 GROUP BY Vehicle_Type
 ORDER BY avg_booking_value DESC;
 
+--**Reasons for Cancelling Rides(Customer)**
+[SQL file in Google Drive](https://drive.google.com/file/d/1QmTY_IybsHva1LokYqw9CIW33W28sj6H/view?usp=drive_link)
 
+SELECT 
+    vehicle_type,
+    reason_for_cancelling_by_customer,
+    COUNT(booking_id) AS cancellation_count
+FROM ncr_ride_data
+WHERE booking_status = 'Cancelled by Customer'
+    AND reason_for_cancelling_by_customer IS NOT NULL
+GROUP BY vehicle_type, reason_for_cancelling_by_customer
+ORDER BY vehicle_type, cancellation_count DESC;
 
+--**Top 10 Routes ( Performance Overview)**
+[SQL file in Google Drive](https://drive.google.com/file/d/1zS84ItdhCWJNz0X67oBCF8vbjzD7MTcW/view?usp=drive_link)
+
+SELECT 
+    pickup_location,
+    drop_location,
+    ROUND(AVG(booking_value), 2) AS avg_booking_value,
+    ROUND(
+        SUM(CASE WHEN booking_status IN ('Cancelled by Driver', 'Cancelled by Customer') THEN 1 ELSE 0 END) * 100.0 / COUNT(booking_id),
+        2
+    ) AS cancellation_rate_percent,
+    COUNT(booking_id) AS total_bookings,
+    SUM(CASE WHEN booking_status = 'Completed' THEN 1 ELSE 0 END) AS completed_rides
+FROM ncr_ride_data
+GROUP BY pickup_location, drop_location
+HAVING COUNT(booking_id) >= 10  -- Avoid low-volume routes
+ORDER BY avg_booking_value DESC, cancellation_rate_percent ASC
+LIMIT 10;
   
 
 
