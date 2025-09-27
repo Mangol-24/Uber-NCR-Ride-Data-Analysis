@@ -62,8 +62,63 @@ This project analyzes UBER ride data for the NCR (National Capital Region) to ex
 -- KPI: Total Bookings, Completed Rides, Avg Booking Value, Cancellation Rate, Peak Hour Rides
 -- Rides by **Day, Hour, Vehicle Type, Payment Method**
 -- **Top 10 pickup-drop pairs** with completion and cancellation rate
---Cancellation reasons breakdown
+-- Average Booking value and Average Ride distance by Day
+-- Reason for cancelling rides by **Customer**
+-- Avarage Ride Distance and Booking Value by Vehicle Type
+-- Cancellation reasons breakdown 
 
+----
+
+## SQL Queries
+-- **Average Booking value and ride distance by Day**
+  [SQL file in Google Drive](https://drive.google.com/file/d/1u6U_YRVfkfVHuFddS2kIYPn3RwKiEP06/view?usp=drive_link)
+  
+  SELECT DAY,
+	ROUND(AVG(Booking_Value), 2) AS avg_booking_value,
+	ROUND(AVG(Ride_Distance), 2) AS avg_ride_distance
+FROM uber_ncr_data
+WHERE Booking_Status = 'Completed'
+GROUP BY DAY
+ORDER BY DAY;
+
+--**Payment method by total bookings and Percentage**
+[SQL file in Google Drive](https://drive.google.com/file/d/1qP5SE-osq-FoYVkT9vnG5EEf6tI9Or5f/view?usp=drive_link)
+
+SELECT 
+    payment_method,
+    COUNT(booking_id) AS total_bookings,
+    ROUND(
+        (COUNT(booking_id) * 100.0 / (SELECT COUNT(*) FROM ncr_ride_data WHERE payment_method IS NOT NULL)),
+        2
+    ) AS percentage
+FROM ncr_ride_data
+WHERE payment_method IS NOT NULL
+GROUP BY payment_method
+ORDER BY total_bookings DESC;
+
+--**Rides by Vehicle Type and Status**
+[SQL file in Google Drive](https://drive.google.com/file/d/1euRKKkCRqDyYdov8L3BBlRA2kGd6mUcM/view?usp=drive_link)
+
+SELECT Vehicle_Type, Booking_Status,
+	COUNT(Booking_ID) AS total_rides
+FROM ncr_ride_data
+GROUP BY Vehicle_Type,Booking_Status
+ORDER BY Vehicle_Type,Booking_Status;
+
+--**Avarage Ride Distance and Booking Value by Vehicle Type**
+[SQL file in Google Drive](https://drive.google.com/file/d/1hKi9LUiJ_BRQoSMrfZWDw_XvW-acIcDk/view?usp=drive_link)
+
+SELECT Vehicle_Type,
+	ROUND(AVG(Ride_Distance), 2) AS avg_ride_distance,
+	ROUND(AVG(Booking_Value), 2) AS avg_booking_value
+FROM ncr_ride_data
+WHERE Booking_Status = 'Completed'
+GROUP BY Vehicle_Type
+ORDER BY avg_booking_value DESC;
+
+
+
+  
 
 
 
