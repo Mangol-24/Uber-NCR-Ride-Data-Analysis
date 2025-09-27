@@ -148,7 +148,45 @@ HAVING COUNT(booking_id) >= 10  -- Avoid low-volume routes
 ORDER BY avg_booking_value DESC, cancellation_rate_percent ASC
 LIMIT 10;
 
-## DAX Measures in Power BI**
+## DAX Measures in Power BI
+
+-- **Average Ride Distance**
+Avarage Ride Distance = AVERAGE(ncr_ride_data[Ride Distance])
+
+--**Average Booking Value**
+Avg Booking Value = AVERAGE(ncr_ride_data[Booking Value])
+
+-- **Average Driver Rating**
+Avg Driver Rating = AVERAGE(ncr_ride_data[Driver Ratings])
+
+--**Cancellation Rate**
+Cancellation Rate = DIVIDE(CALCULATE(COUNTROWS(ncr_ride_data),ncr_ride_data[Booking Status] IN { "Incomplete", "Cancelled by Customer", "Cancelled by Driver", "Incomplete", "No Driver Found" }),[Total Bookings],0)
+
+-- **Peak Hour Rides**
+Peak Hour Rides = 
+VAR MaxHour = 
+    MAXX(
+        SUMMARIZE(ncr_ride_data, ncr_ride_data[Time], "RideCount", COUNTROWS(ncr_ride_data)),
+        [RideCount]
+    )
+RETURN MaxHour
+
+-- **Total Bookings**
+Total Bookings = COUNT('ncr_ride_data'[Booking ID])
+
+-- **Total Completed Rides**
+Total Completed Rides = 
+CALCULATE(
+  COUNTROWS('ncr_ride_data'),
+  'ncr_ride_data'[Booking Status] = "Completed"
+)
+
+-- **Total Revenue**
+Total Revenue = SUM(ncr_ride_data[Booking Value])
+
+
+
+
 
 
 
