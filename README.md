@@ -56,7 +56,7 @@ This project analyzes UBER ride data for the NCR (National Capital Region) to ex
 ----
 
 ## Dashboard Preview
-[Dashboard File Link](https://drive.google.com/file/d/1wy0UgU9JN8WLrnCt5rTfubFKx6vTB_iF/view?usp=drive_link)
+[Dashboard File Link](https://drive.google.com/file/d/1wy0UgU9JN8WLrnCt5rTfubFKx6vTB_iF/view?usp=sharing)
 
 -The dashboard shows:
 - KPI: Total Bookings, Completed Rides, Avg Booking Value, Cancellation Rate, Peak Hour Rides
